@@ -1,12 +1,13 @@
 import Header from './components/Header';
-import Main from './pages/Main';
+import MainPage from './pages/MainPage';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   return (
-    <>
+    <RecoilRoot>
       <Header />
-      <Main />
-    </>
+      <MainPage />
+    </RecoilRoot>
   );
 }
 

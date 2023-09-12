@@ -14,8 +14,10 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     width: 100vw;
+    min-width: 360px;
     height: 100vh;
     letter-spacing: -0.05rem;
+    background-color: #F1F2F9;
   }
 
   #root {

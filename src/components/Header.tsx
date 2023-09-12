@@ -18,6 +18,7 @@ const StyledHeader = styled.header`
     padding: 1.5rem 2rem;
   }
 `;
+
 const StyledSection = styled.section`
   display: flex;
   width: 80%;
