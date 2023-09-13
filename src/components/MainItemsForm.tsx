@@ -9,10 +9,15 @@ const StyledSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: start;
-  jus
+  width: 100%;
+`;
+
+const StyledLabel = styled.label`
+  width: 100%;
 `;
 
 const StyledInput = styled.input`
+  width: 100%;
   border: solid 2px #e02678;
   border-radius: 0.3rem;
   padding: 1rem 1.25rem;
@@ -66,14 +71,10 @@ const MainItemsForm = ({ index, text, buttonText }) => {
       {index === activeIndex && (
         <MainItem>
           <StyledSection>
-            <label>
-              이름
-              <StyledInput type="text" value={name} onChange={(e) => handleChange(e, setName)} />
-            </label>
-            <label>
-              이메일
-              <StyledInput type="email" value={email} onChange={(e) => handleChange(e, setEmail)} />
-            </label>
+            <StyledLabel>이름</StyledLabel>
+            <StyledInput type="text" value={name} onChange={(e) => handleChange(e, setName)} />
+            <StyledLabel>이메일</StyledLabel>
+            <StyledInput type="email" value={email} onChange={(e) => handleChange(e, setEmail)} />
             <MainItemButton text={buttonText} onClick={handleSend} />
           </StyledSection>
         </MainItem>
