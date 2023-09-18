@@ -1,6 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
 import { slideIn, slideRight } from './../styles';
+
+interface MainItemButtonProps {
+  text: string;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: () => void;
+}
+
+type KeyframeResult = ReturnType<typeof keyframes>;
+
+interface StyledMainItemButtonProps {
+  $isClicked: boolean;
+  $animation: string | KeyframeResult | undefined;
+}
+
+interface TimeStampProps {
+  $isClicked: boolean;
+}
 
 const StyledMainItemButtonSection = styled.div`
   width: 100%;
@@ -11,7 +28,7 @@ const StyledMainItemButtonSection = styled.div`
   animation: ${slideIn} 1s ease-out;
 `;
 
-const StyledMainItemButton = styled.button`
+const StyledMainItemButton = styled.button<StyledMainItemButtonProps>`
   color: white;
   background-color: #e02678;
   border-color: #e02678;
@@ -37,7 +54,7 @@ const StyledMainItemButton = styled.button`
     border-radius 0.3s;
 `;
 
-const TimeStamp = styled.span`
+const TimeStamp = styled.span<TimeStampProps>`
   display: none;
 
   @media (min-width: 768px) {
@@ -48,7 +65,7 @@ const TimeStamp = styled.span`
   }
 `;
 
-const MainItemButton = ({ text, onClick }) => {
+const MainItemButton = ({ text, type = 'button', onClick }: MainItemButtonProps) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [currentTime, setCurrentTime] = useState('');
@@ -61,16 +78,17 @@ const MainItemButton = ({ text, onClick }) => {
   const handleClick = () => {
     setIsClicked(true);
     setTimeout(() => {
-      onClick();
+      onClick?.();
     }, 1000);
   };
 
   return (
     <StyledMainItemButtonSection>
       <StyledMainItemButton
+        type={type}
         $isClicked={isClicked}
         onClick={handleClick}
-        $animation={isInitialRender ? slideIn : isClicked ? slideRight : 'none'}
+        $animation={isInitialRender ? slideIn : isClicked ? slideRight : undefined}
       >
         {text}
       </StyledMainItemButton>

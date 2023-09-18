@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import MainItem from './MainItem';
 import MainItemButton from './MainItemButton';
 import { mainPageState } from './../store/mainPageState';
 
-const MainItems = ({ index, items, buttonText }) => {
+interface MainItemsProps {
+  index: number;
+  items: string[];
+  buttonText: string;
+}
+
+const MainItems = ({ index, items, buttonText }: MainItemsProps) => {
   const [activeIndex, setActiveIndex] = useRecoilState(mainPageState);
-  const [visibleItems, setVisibleItems] = useState([]);
+  const [visibleItems, setVisibleItems] = useState<string[]>([]);
 
   useEffect(() => {
     if (index === activeIndex) {

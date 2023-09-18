@@ -1,4 +1,3 @@
-import React from 'react';
 import MainItems from './../components/MainItems';
 import styled from 'styled-components';
 import MainItemsForm from './../components/MainItemsForm';
@@ -32,7 +31,16 @@ const MainPage = () => {
         buttonText="Next 1"
       />
       <MainItems index={1} items={['Item 2-1', 'Item 2-2', 'Item 2-3', 'Item 2-4']} buttonText="Next 2" />
-      <MainItems index={2} items={['Item 3-1', 'Item 3-2', 'Item 3-3', 'Item 3-4']} buttonText="Finish" />
+      <MainItems
+        index={2}
+        items={[
+          'Item 3-1',
+          'Item 3-2',
+          'Item 3-3',
+          '이름과 이메일을 남겨주시면 저희가 발행하는 특집 부록을 드릴께요! 필요하신가요?',
+        ]}
+        buttonText="네 받고싶어요"
+      />
       <MainItemsForm index={3} text="Please enter your details" buttonText="Send" />
     </MainSection>
   );

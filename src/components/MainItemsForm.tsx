@@ -5,7 +5,13 @@ import MainItemButton from './MainItemButton';
 import { mainPageState } from './../store/mainPageState';
 import styled from 'styled-components';
 
-const StyledSection = styled.section`
+interface MainItemsFormProps {
+  index: number;
+  text: string;
+  buttonText: string;
+}
+
+const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -24,7 +30,7 @@ const StyledInput = styled.input`
   margin: 0.5rem 0;
 `;
 
-const MainItemsForm = ({ index, text, buttonText }) => {
+const MainItemsForm: React.FC<MainItemsFormProps> = ({ index, buttonText }) => {
   const [activeIndex, setActiveIndex] = useRecoilState(mainPageState);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -35,11 +41,21 @@ const MainItemsForm = ({ index, text, buttonText }) => {
     }
   }, [index, activeIndex]);
 
-  const handleChange = (event, setter) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setter: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
     setter(event.target.value);
   };
 
-  const handleSend = async () => {
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!name || !email) {
+      alert('이름과 이메일을 올바르게 작성해 주세요');
+      return;
+    }
+
     try {
       const response = await fetch('YOUR_API_URL_HERE', {
         method: 'POST',
@@ -50,14 +66,12 @@ const MainItemsForm = ({ index, text, buttonText }) => {
       });
 
       if (response.ok) {
-        // 요청이 성공했을 때 수행할 로직
         setActiveIndex((prevIndex) => prevIndex + 1);
         alert('이메일이 성공적으로 발송 되었습니다.');
         setName('');
         setEmail('');
         window.location.reload();
       } else {
-        // 요청이 실패했을 때 수행할 로직
         alert('이메일 전송이 실패했습니다');
       }
     } catch (error) {
@@ -69,14 +83,29 @@ const MainItemsForm = ({ index, text, buttonText }) => {
   return (
     <>
       {index === activeIndex && (
-        <MainItem>
-          <StyledSection>
+        <MainItem text="">
+          <StyledForm onSubmit={handleSend}>
             <StyledLabel>이름</StyledLabel>
-            <StyledInput type="text" value={name} onChange={(e) => handleChange(e, setName)} />
+            <StyledInput
+              type="text"
+              value={name}
+              onChange={(e) => handleChange(e, setName)}
+              required
+              autoFocus
+              placeholder="성함을 입력해주세요"
+              maxLength={15}
+            />
             <StyledLabel>이메일</StyledLabel>
-            <StyledInput type="email" value={email} onChange={(e) => handleChange(e, setEmail)} />
-            <MainItemButton text={buttonText} onClick={handleSend} />
-          </StyledSection>
+            <StyledInput
+              type="email"
+              value={email}
+              onChange={(e) => handleChange(e, setEmail)}
+              required
+              placeholder="답신을 받을 이메일을 입력해주세요"
+              maxLength={40}
+            />
+            <MainItemButton type="submit" text={buttonText} />
+          </StyledForm>
         </MainItem>
       )}
     </>

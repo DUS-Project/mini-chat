@@ -1,6 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 import { slideIn } from './../styles';
+
+interface MainItemProps {
+  text: string;
+  children?: React.ReactNode; // children은 선택적인 prop으로 설정
+}
 
 const StyledMainItem = styled.div`
   display: flex;
@@ -19,7 +23,7 @@ const StyledMainItem = styled.div`
     border-radius 0.3s;
 `;
 
-const MainItem = ({ text, children }) => {
+const MainItem = ({ text, children }: MainItemProps) => {
   return (
     <StyledMainItem>
       {text}
